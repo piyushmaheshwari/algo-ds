@@ -14,21 +14,13 @@ class Word {
         this.word = word;
         this.pos = pos;
     }
-
-    @Override
-    public String toString() {
-        return "Word{" +
-                "word='" + word + '\'' +
-                ", pos=" + pos +
-                '}';
-    }
 }
 
 public class WordProximity {
 
     String readFile(String fileName) throws Exception {
         BufferedReader f = new BufferedReader(new FileReader("src/" + fileName));
-        String line = null;
+        String line;
         StringBuilder sb = new StringBuilder();
         while ((line = f.readLine()) != null) {
             sb.append(line);
@@ -95,11 +87,68 @@ public class WordProximity {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    void proximityK(List<String> inputWords, int k) throws Exception {
+        String content = readFile("data.txt");
+        List<Word> documentWords = processDocument(content);
+        Set<String> inputWordSet = new HashSet<>(inputWords);
+        Map<String, Integer> bag = new HashMap<>();
+        int min = Integer.MAX_VALUE;
+        int lans = 0;
+        int rans = 0;
+        int left = 0;
+        int right = 0;
+        while (left < documentWords.size()) {
+            right = left + 1;
+            Word w = documentWords.get(left);
+            if (inputWordSet.contains(w.word)) {
+                bag.put(w.word, 1);
+                break;
+            }
+            left += 1;
+        }
+        while (right < documentWords.size()) {
+            Word w = documentWords.get(right);
+            if (inputWordSet.contains(w.word)) {
+                bag.put(w.word, bag.getOrDefault(w.word, 0) + 1);
+                while (left < right) {
+                    Word leftWord = documentWords.get(left);
+                    if (!bag.containsKey(leftWord.word)) {
+                        left += 1;
+                    } else {
+                        int count = bag.get(leftWord.word);
+                        if (count > 1 || bag.size() > k) {
+                            if (count == 1) {
+                                bag.remove(leftWord.word);
+                            } else {
+                                bag.put(leftWord.word, count - 1);
+                            }
+                            left += 1;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                if (bag.size() == k) {
+                    Word rightWord = documentWords.get(right);
+                    Word leftWord = documentWords.get(left);
+                    if (min > (rightWord.pos + rightWord.word.length() - leftWord.pos)) {//new min
+                        rans = rightWord.word.length() + rightWord.pos;
+                        lans = leftWord.pos;
+                        min = rans - lans;
+                    }
+                }
+            }
+            right += 1;
+        }
 
+        if (min != Integer.MAX_VALUE) {
+            System.out.println("Answer : " + min + " " + content.substring(lans, rans + 1));
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
         WordProximity prox = new WordProximity();
         prox.proximityFirst("this", "is");
-        prox.proximitySecond(Arrays.asList("this", "everyone's", "that"));
-
+        prox.proximityK(Arrays.asList("we", "are", "shit", "this"), 3);
     }
 }
