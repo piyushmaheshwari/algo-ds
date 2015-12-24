@@ -6,17 +6,17 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-class Word {
-    public String word;
-    public int pos;
-
-    Word(String word, int pos) {
-        this.word = word;
-        this.pos = pos;
-    }
-}
-
 public class WordProximity {
+
+    class Word {
+        public String word;
+        public int pos;
+
+        Word(String word, int pos) {
+            this.word = word;
+            this.pos = pos;
+        }
+    }
 
     String readFile(String fileName) throws Exception {
         BufferedReader f = new BufferedReader(new FileReader("src/" + fileName));
@@ -87,16 +87,22 @@ public class WordProximity {
         }
     }
 
+    void removeWord(Map<String, Integer> bag, String key) {
+        int count = bag.get(key);
+        if (count == 1) {
+            bag.remove(key);
+        } else {
+            bag.put(key, count - 1);
+        }
+    }
+
     void proximityK(List<String> inputWords, int k) throws Exception {
         String content = readFile("data.txt");
         List<Word> documentWords = processDocument(content);
         Set<String> inputWordSet = new HashSet<>(inputWords);
         Map<String, Integer> bag = new HashMap<>();
         int min = Integer.MAX_VALUE;
-        int lans = 0;
-        int rans = 0;
-        int left = 0;
-        int right = 0;
+        int lans = 0, rans = 0, left = 0, right = 0;
         while (left < documentWords.size()) {
             right = left + 1;
             Word w = documentWords.get(left);
@@ -112,21 +118,17 @@ public class WordProximity {
                 bag.put(w.word, bag.getOrDefault(w.word, 0) + 1);
                 while (left < right) {
                     Word leftWord = documentWords.get(left);
-                    if (!bag.containsKey(leftWord.word)) {
-                        left += 1;
-                    } else {
+                    if (bag.containsKey(leftWord.word)) {
                         int count = bag.get(leftWord.word);
+                        // there are 2 case where we want to remove the word from left side of window
+                        // First when the word is being repeated, second when the bag is greater than k
                         if (count > 1 || bag.size() > k) {
-                            if (count == 1) {
-                                bag.remove(leftWord.word);
-                            } else {
-                                bag.put(leftWord.word, count - 1);
-                            }
-                            left += 1;
+                            removeWord(bag, leftWord.word);
                         } else {
                             break;
                         }
                     }
+                    left += 1;
                 }
                 if (bag.size() == k) {
                     Word rightWord = documentWords.get(right);
@@ -140,15 +142,8 @@ public class WordProximity {
             }
             right += 1;
         }
-
         if (min != Integer.MAX_VALUE) {
             System.out.println("Answer : " + min + " " + content.substring(lans, rans + 1));
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-        WordProximity prox = new WordProximity();
-        prox.proximityFirst("this", "is");
-        prox.proximityK(Arrays.asList("we", "are", "shit", "this"), 3);
     }
 }

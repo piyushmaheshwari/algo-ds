@@ -8,6 +8,7 @@
 #include "6/MultBigInt.cpp"
 #include <algorithm>
 #include "6/MaxDifference.cpp"
+#include "6/PermuteArray.cpp"
 
 
 using namespace std;
@@ -121,7 +122,7 @@ int main() {
 //    printIntervals(list);
 //    auto merged = mergeIntervals(list);
 //    printIntervals(merged);
-      MaxDifference::test();
+      PermuteArray::test();
 
     return 0;
 }
