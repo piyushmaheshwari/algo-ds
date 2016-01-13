@@ -1,5 +1,7 @@
 package binaryTrees;
 
+import util.Tuple2;
+
 public class KUnbalanced {
     Tuple2<BinaryTree, Integer> isKUnbalancedInner (BinaryTree root, int k) {
         Tuple2 <BinaryTree, Integer> leftAns = (root.left != null) ? isKUnbalancedInner(root.left,k) : new Tuple2<>(null, 0);

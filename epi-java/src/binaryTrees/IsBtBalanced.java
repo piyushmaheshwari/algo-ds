@@ -1,5 +1,7 @@
 package binaryTrees;
 
+import util.Tuple2;
+
 public class IsBtBalanced {
     public static Tuple2<Boolean, Integer> isBalancedInner(BinaryTree root) {
         Tuple2<Boolean, Integer> leftAns = (root.left != null) ? isBalancedInner(root.left) : new Tuple2<>(true, 0);

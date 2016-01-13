@@ -1,6 +1,9 @@
 package binaryTrees;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BinaryTree {
     public int val;
     public BinaryTree left;
@@ -11,15 +14,26 @@ public class BinaryTree {
         this.left = null;
         this.right = null;
     }
-}
 
-class Tuple2<L, R> {
-    public L first;
-    public R second;
+    public static BinaryTree makeN(int val) {
+        return new BinaryTree(val);
+    }
 
-    public Tuple2(L first, R second) {
-        this.first = first;
-        this.second = second;
+    private void inOrderInner(List<Integer> arg, BinaryTree root) {
+        if (root == null)
+            return;
+        else {
+            inOrderInner(arg, root.left);
+            arg.add(root.val);
+            inOrderInner(arg, root.right);
+        }
+    }
+
+    public List<Integer> getInOrder() {
+        List<Integer> arg = new ArrayList<>();
+        inOrderInner(arg, this);
+        return arg;
     }
 }
+
 
