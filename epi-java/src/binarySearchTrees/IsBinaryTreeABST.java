@@ -1,10 +1,10 @@
 package binarySearchTrees;
 
-import util.BinaryTreeNode;
+import util.BTNode;
 
 public class IsBinaryTreeABST {
 
-    private boolean solveInner (BinaryTreeNode<Integer> root, int leftRange, int rightRange) {
+    private boolean solveInner (BTNode<Integer> root, int leftRange, int rightRange) {
         if (root == null)
             return true;
 
@@ -15,17 +15,17 @@ public class IsBinaryTreeABST {
                 solveInner(root.left, leftRange, Math.min(root.val, rightRange));
     }
 
-    public boolean solve (BinaryTreeNode<Integer> root){
+    public boolean solve (BTNode<Integer> root){
         return solveInner(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
     public void test (){
-        BinaryTreeNode<Integer> tree = new BinaryTreeNode<>(3);
-        tree.left = new BinaryTreeNode<>(2);
-        tree.left.left = new BinaryTreeNode<>(1);
-        tree.right = new BinaryTreeNode<>(5);
-        tree.right.left = new BinaryTreeNode<>(-1);
-        tree.right.right = new BinaryTreeNode<>(6);
+        BTNode<Integer> tree = new BTNode<>(3);
+        tree.left = new BTNode<>(2);
+        tree.left.left = new BTNode<>(1);
+        tree.right = new BTNode<>(5);
+        tree.right.left = new BTNode<>(-1);
+        tree.right.right = new BTNode<>(6);
 
         System.out.println(solve(tree));
     }
