@@ -10,7 +10,7 @@ public class Graph {
         g = new HashMap<>();
     }
 
-    private class Edge {
+    public class Edge {
         public String from;
         public String to;
         public int weight;

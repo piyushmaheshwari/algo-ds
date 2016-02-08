@@ -10,4 +10,13 @@ public class Tuple3<L, R, S> {
         this.second = second;
         this.third = third;
     }
+
+    @Override
+    public String toString() {
+        return "Tuple3{" +
+                "first=" + first +
+                ", second=" + second +
+                ", third=" + third +
+                '}';
+    }
 }

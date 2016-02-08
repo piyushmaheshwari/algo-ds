@@ -1,18 +1,12 @@
 package hashTable;
 
-import util.Tuple2;
+import util.TupleInt;
 
 import java.util.HashSet;
 import java.util.Set;
 
 
 public class LongestSubarrayWithDistinctEntries {
-
-    class TupleInt extends Tuple2<Integer, Integer> {
-        TupleInt(Integer x, Integer y) {
-            super(x, y);
-        }
-    }
 
     TupleInt solve(int[] input) {
         Set<Integer> distinct = new HashSet<>();

@@ -4,27 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SortedListToBST {
-    class Node {
+    class ListNode {
         public int val;
-        public Node next;
-        public Node prev;
+        public ListNode next;
+        public ListNode prev;
 
-        public Node(int val) {
+        public ListNode(int val) {
             this.val = val;
             this.next = this.prev = null;
         }
     }
 
     class DLL {
-        public Node head;
-        public Node tail;
+        public ListNode head;
+        public ListNode tail;
 
         public DLL() {
             this.head = this.tail = null;
         }
 
         public void addNode(int val) {
-            Node n = new Node(val);
+            ListNode n = new ListNode(val);
             if (head == null) {
                 assert (tail == null);
                 head = tail = n;
@@ -36,7 +36,7 @@ public class SortedListToBST {
         }
 
         public void printList() {
-            Node t = this.head;
+            ListNode t = this.head;
             List<Integer> l = new ArrayList<>();
             while (t != null) {
                 l.add(t.val);
@@ -47,7 +47,7 @@ public class SortedListToBST {
 
         public int length() {
             int ans = 0;
-            Node t = this.head;
+            ListNode t = this.head;
             while (t != null) {
                 ans += 1;
                 t = t.next;
@@ -56,31 +56,31 @@ public class SortedListToBST {
         }
     }
 
-    private Node nextPointer;
+    private ListNode nextPointer;
 
-    private Node solveInner(int len) {
-        Node root = null;
+    private ListNode solveInner(int len) {
+        ListNode root = null;
         if (len == 1) {
             root = this.nextPointer;
             this.nextPointer = this.nextPointer.next;
             root.next = root.prev = null;
         } else if (len > 1) {
-            Node leftTree = solveInner(len / 2);
+            ListNode leftTree = solveInner(len / 2);
             root = this.nextPointer;
             this.nextPointer = this.nextPointer.next;
-            Node rightTree = solveInner(len - 1 - len / 2);
+            ListNode rightTree = solveInner(len - 1 - len / 2);
             root.prev = leftTree;
             root.next = rightTree;
         }
         return root;
     }
 
-    private Node solve(DLL list) {
+    private ListNode solve(DLL list) {
         this.nextPointer = list.head;
         return solveInner(list.length());
     }
 
-    private List<Integer> inOrder(Node root) {
+    private List<Integer> inOrder(ListNode root) {
         List<Integer> l = new ArrayList<>();
         if (root != null) {
             l.addAll(inOrder(root.prev));
@@ -97,7 +97,7 @@ public class SortedListToBST {
         list.addNode(4);
         list.addNode(5);
         list.printList();
-        Node tree = solve(list);
+        ListNode tree = solve(list);
         System.out.println(inOrder(tree));
     }
 }
