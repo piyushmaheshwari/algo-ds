@@ -2,9 +2,7 @@ package recursion;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class GenerateParentheses {
     Set<String> solve(int k) {
@@ -23,7 +21,6 @@ public class GenerateParentheses {
         }
         return ans;
     }
-
 
     public void test () {
         System.out.println(solve(3));

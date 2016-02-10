@@ -5,7 +5,7 @@ import util.Tuple2;
 
 public class InsertionDeletionBST {
 
-    boolean insertBST(BTNode<Integer> root, BTNode<Integer> key) {
+    public boolean insertBST(BTNode<Integer> root, BTNode<Integer> key) {
         if (root == null || root.val == key.val) {
             return false;
         } else if (root.val > key.val) {
@@ -65,7 +65,7 @@ public class InsertionDeletionBST {
 
     //returns the root of updated tree after removing the node whose
     //value is the key passed
-    BTNode<Integer> deleteBST(BTNode<Integer> root, int key) {
+    public BTNode<Integer> deleteBST(BTNode<Integer> root, int key) {
         if (root == null)
             return null;
 
