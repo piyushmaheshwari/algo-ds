@@ -7,6 +7,9 @@ public class LargestRectangleSkyline {
     int calculateLargestRectangle(List<Integer> heights) {
         int n = heights.size();
         int[] leftScan = new int[n];
+        int[] rightScan = new int[n];
+        int ans = Integer.MIN_VALUE;
+
         leftScan[n - 1] = n;
         for (int i = n - 2; i >= 0; i--) {
             if (heights.get(i) > heights.get(i + 1))
@@ -19,8 +22,6 @@ public class LargestRectangleSkyline {
             }
         }
 
-
-        int[] rightScan = new int[n];
         rightScan[0] = -1;
         for (int i = 1; i < n; i++) {
             if (heights.get(i) > heights.get(i - 1))
@@ -32,8 +33,6 @@ public class LargestRectangleSkyline {
                 rightScan[i] = temp;
             }
         }
-
-        int ans = Integer.MIN_VALUE;
 
         for (int i = 0; i < n; i++) {
             int left = (leftScan[i] - i);

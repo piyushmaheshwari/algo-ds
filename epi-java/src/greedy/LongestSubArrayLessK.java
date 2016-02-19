@@ -72,7 +72,6 @@ public class LongestSubArrayLessK {
                     bruteAns = TupleInt.make(i, j);
             }
         }
-
         if (ans.equals(bruteAns))
             return true;
         else
