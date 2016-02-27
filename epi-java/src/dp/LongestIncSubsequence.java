@@ -4,7 +4,7 @@ import java.util.*;
 
 public class LongestIncSubSequence {
 
-    int binarySearchBetter(int[] arr, int low, int high, int val) {
+    int binarySearch(int[] arr, int low, int high, int val) {
         int ans = high + 1;
         while (low <= high) {
             int mid = low + (high - low) / 2;
@@ -21,26 +21,26 @@ public class LongestIncSubSequence {
     List<Integer> solve(int[] arr) {
         int n = arr.length;
         int[] dp = new int[n];
-        int [] index = new int[n];
+        int[] index = new int[n];
         int[] parent = new int[n];
         int high = 0;
         dp[0] = arr[0];
-        parent [0] = -1;
-        index [0] = 0;
+        parent[0] = -1;
+        index[0] = 0;
         for (int i = 1; i < n; i++) {
-            int t = binarySearchBetter(dp, 0, high, arr[i]);
+            int t = binarySearch(dp, 0, high, arr[i]);
             dp[t] = arr[i];
-            index [t] = i;
-            parent [i] = index [t - 1];
+            index[t] = i;
+            parent[i] = index[t - 1];
             if (t > high)
                 high = t;
         }
 
         List<Integer> result = new ArrayList<>();
-        int p = index [high];
-        while (p != -1){
+        int p = index[high];
+        while (p != -1) {
             result.add(arr[p]);
-            p = parent [p];
+            p = parent[p];
         }
 
         Collections.reverse(result);
@@ -52,3 +52,5 @@ public class LongestIncSubSequence {
         System.out.println(solve(input));
     }
 }
+
+

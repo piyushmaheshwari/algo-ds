@@ -93,7 +93,7 @@ public class Graph {
         List<Set<String>> ans = new ArrayList<>();
         topologicallySorted.stream().forEach(node -> {
             if (!visited.contains(node)) {
-                List<String> temp = new ArrayList<String>();
+                List<String> temp = new ArrayList<>();
                 transposed.dfsInner(node, visited, temp);
                 ans.add(new HashSet<>(temp));
             }
